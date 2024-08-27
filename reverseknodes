@@ -1,0 +1,37 @@
+int getlength(Node* head){
+    Node* temp=head;
+    int count=0;
+    while(temp!=NULL){
+        temp=temp->next;
+        count++;
+    }
+    return count;
+}
+Node* kReverse(Node* head, int k) {
+    //base case and  if 'n' is not divisible by 'k', then the last group of nodes should remain unchanged.
+    if(head==NULL || getlength(head)<k){
+        return head;
+    }
+
+    //reverse first k nodes
+    Node* curr=head;
+    Node* prev=NULL;
+    Node* forward=NULL;
+    int count =0; 
+
+    while(curr!=NULL && count<k){
+        forward=curr->next;
+        curr->next=prev;
+        prev=curr;
+        curr=forward;
+        count++;
+    }
+
+    //recursion
+    if(forward!=NULL){
+        head->next=kReverse(curr,k);
+    }
+
+    //return head
+    return prev;
+}
